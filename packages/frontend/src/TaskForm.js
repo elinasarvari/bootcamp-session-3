@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button, Paper, Typography, Box, FormControl, InputLabel, Select, MenuItem, Chip } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import SaveIcon from '@mui/icons-material/Save';
+import './App.css';
 
 // Priority constants and color mapping
 const PRIORITY_LEVELS = {
@@ -10,10 +11,13 @@ const PRIORITY_LEVELS = {
   P3: 'P3'
 };
 
-const PRIORITY_COLORS = {
-  P1: '#d32f2f', // Red
-  P2: '#ff9800', // Orange
-  P3: '#9e9e9e'  // Gray
+// Use the specified colors: #07F2E6 for selected, #7A7A7A for unselected
+const getPriorityColor = (priorityLevel, isSelected = false) => {
+  return isSelected ? '#07F2E6' : '#7A7A7A';
+};
+
+const getPriorityTextColor = (priorityLevel, isSelected = false) => {
+  return isSelected ? '#000000' : '#ffffff';
 };
 
 function TaskForm({ onSave, initialTask }) {
@@ -185,22 +189,26 @@ function TaskForm({ onSave, initialTask }) {
             onChange={e => setPriority(e.target.value)}
             inputProps={{ 'data-testid': 'priority-select' }}
           >
-            {Object.values(PRIORITY_LEVELS).map((level) => (
-              <MenuItem key={level} value={level}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <Chip
-                    label={level}
-                    size="small"
-                    sx={{
-                      backgroundColor: PRIORITY_COLORS[level],
-                      color: 'white',
-                      fontWeight: 'bold',
-                      minWidth: 40,
-                    }}
-                  />
-                </Box>
-              </MenuItem>
-            ))}
+            {Object.values(PRIORITY_LEVELS).map((level) => {
+              const isSelected = level === priority;
+              return (
+                <MenuItem key={level} value={level}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Chip
+                      label={level}
+                      size="small"
+                      className={`priority-chip ${isSelected ? 'selected' : 'unselected'}`}
+                      sx={{
+                        backgroundColor: getPriorityColor(level, isSelected),
+                        color: getPriorityTextColor(level, isSelected),
+                        fontWeight: 'bold',
+                        minWidth: 40,
+                      }}
+                    />
+                  </Box>
+                </MenuItem>
+              );
+            })}
           </Select>
         </FormControl>
         {error && <Typography color="error" sx={{ fontWeight: 500, fontSize: '0.875rem' }}>{error}</Typography>}

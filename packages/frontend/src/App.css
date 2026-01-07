@@ -92,3 +92,30 @@ li:last-child {
   color: #d32f2f;
   font-weight: bold;
 }
+
+/* Priority item colors */
+.priority-selected {
+  background-color: #07F2E6 !important;
+  color: #000000 !important;
+}
+
+.priority-unselected {
+  background-color: #7A7A7A !important;
+  color: #ffffff !important;
+}
+
+.priority-chip {
+  font-weight: bold;
+  min-width: 40px;
+  height: 22px;
+}
+
+.priority-chip.selected {
+  background-color: #07F2E6;
+  color: #000000;
+}
+
+.priority-chip.unselected {
+  background-color: #7A7A7A;
+  color: #ffffff;
+}

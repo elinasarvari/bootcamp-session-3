@@ -5,12 +5,16 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import EventIcon from '@mui/icons-material/Event';
+import './App.css';
 
-// Priority color mapping
-const PRIORITY_COLORS = {
-  P1: '#d32f2f', // Red
-  P2: '#ff9800', // Orange
-  P3: '#9e9e9e'  // Gray
+// Priority color mapping using specified colors
+const getPriorityColor = (priority) => {
+  // For task list display, show selected color for the task's priority
+  return '#07F2E6'; // Selected color for all displayed priorities
+};
+
+const getPriorityTextColor = (priority) => {
+  return '#000000'; // Black text on cyan background
 };
 
 function TaskList({ onEdit }) {
@@ -175,9 +179,10 @@ function TaskList({ onEdit }) {
                   <Chip
                     label={task.priority || 'P3'}
                     size="small"
+                    className="priority-chip selected"
                     sx={{
-                      backgroundColor: PRIORITY_COLORS[task.priority || 'P3'],
-                      color: 'white',
+                      backgroundColor: getPriorityColor(task.priority || 'P3'),
+                      color: getPriorityTextColor(task.priority || 'P3'),
                       fontWeight: 'bold',
                       fontSize: '0.75rem',
                       minWidth: 40,
