@@ -6,6 +6,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import EventIcon from '@mui/icons-material/Event';
 
+// Priority color mapping
+const PRIORITY_COLORS = {
+  P1: '#d32f2f', // Red
+  P2: '#ff9800', // Orange
+  P3: '#9e9e9e'  // Gray
+};
+
 function TaskList({ onEdit }) {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -163,19 +170,33 @@ function TaskList({ onEdit }) {
               }}
             />
             <ListItemText
-              primary={
-                <Typography 
-                  variant="body2"
-                  sx={{ 
-                    textDecoration: task.completed ? 'line-through' : 'none', 
-                    color: task.completed ? '#9e9e9e' : '#212121',
-                    fontWeight: task.completed ? 400 : 600,
-                    fontSize: '1rem'
-                  }}
-                >
-                  {task.title}
-                </Typography>
-              }
+              primary={(
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
+                  <Chip
+                    label={task.priority || 'P3'}
+                    size="small"
+                    sx={{
+                      backgroundColor: PRIORITY_COLORS[task.priority || 'P3'],
+                      color: 'white',
+                      fontWeight: 'bold',
+                      fontSize: '0.75rem',
+                      minWidth: 40,
+                      height: 22
+                    }}
+                  />
+                  <Typography 
+                    variant="body2"
+                    sx={{ 
+                      textDecoration: task.completed ? 'line-through' : 'none', 
+                      color: task.completed ? '#9e9e9e' : '#212121',
+                      fontWeight: task.completed ? 400 : 600,
+                      fontSize: '1rem'
+                    }}
+                  >
+                    {task.title}
+                  </Typography>
+                </Box>
+              )}
               secondary={
                 task.description && (
                   <Typography 
